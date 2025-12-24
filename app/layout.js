@@ -1,5 +1,6 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import {AppProvider}  from "./context/AppContext";
+import HomeDesign from "./components/HomeDesign";
 export const metadata = {
   title: "careerforge-ai-next",
   description: "",
@@ -11,7 +12,9 @@ export default function RootLayout({ children }) {
       <body
         className={`antialiased`}
       >
-        {children}
+        <AppProvider>
+          {children}
+        </AppProvider>
       </body>
     </html>
   );

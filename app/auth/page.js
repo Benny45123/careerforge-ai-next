@@ -1,8 +1,11 @@
 "use client"
 import {  useRef, useState } from "react";
 import { Register,Login } from "@/app/services/BackendHandler";
+import { useContext } from "react";
+import { AppContext } from "@/app/context/AppContext";
 
 const Auth=({}) =>{
+    const {setUser}=useContext(AppContext);
     const email=useRef();
     const password=useRef();
     const name=useRef();
@@ -13,12 +16,14 @@ const Auth=({}) =>{
       const ChangeClasses1 = ` bg-white  p-8 rounded-xl shadow-md w-full max-w-md ${
         isSignUpMode ? "transition-transform duration-800 ease-in-out translate-x-full opacity-100" : "transition-transform duration-800 ease-in-out  opacity-100"
       }`;
-      const handleSubmit = (e) => {
+      const handleSubmit = async (e) => {
         e.preventDefault();
         const user = name.current.value;
         const emailVal = email.current.value;
         const passwordVal = password.current.value;
-        Register({name:user,email:emailVal,password:passwordVal});
+        await Register({name:user,email:emailVal,password:passwordVal});
+        
+        setIsSignUpMode(true);
     } 
     const handleLoginSubmit =async (e) => {
         e.preventDefault();
@@ -26,6 +31,7 @@ const Auth=({}) =>{
         const passwordVal = password.current.value;
         const result=await Login({email:emailVal,password:passwordVal});
         if(result){
+
             window.location.reload();
         }   
     }

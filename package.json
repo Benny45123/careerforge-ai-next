@@ -9,8 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "html-to-image": "^1.11.13",
+    "jsonwebtoken": "^9.0.3",
     "jspdf": "^3.0.4",
+    "mongoose": "^9.0.2",
     "next": "16.1.1",
     "react": "19.2.3",
     "react-dom": "19.2.3"

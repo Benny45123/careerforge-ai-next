@@ -1,13 +1,29 @@
 "use client";
-import { useContext } from "react";
+import { useContext,useEffect,useState } from "react";
 import { AppContext } from "@/app/context/AppContext";
-const DisplayCoverLetters = ({coverLetters}) => {
+import { getAllCoverLetters } from "@/app/services/BackendHandler";
+const DisplayCoverLetters = () => {
     // console.log("Cover letter data in DisplayCoverLetters.jsx:",coverLetters);
     // const coverLetters=coverLetterData.coverLetters;
+    const [coverLetters,setCoverLetters]=useState([]);
+    useEffect(()=>{
+        const fetchCoverLetters = async () => {
+        try{
+    const coverLetter=await getAllCoverLetters();
+    setCoverLetters(coverLetter);
+    // console.log("All Cover Letters:", coverLetter);
+        }
+        catch(error){
+            console.error('Error fetching cover letters:',error);
+        }
+    }
+    fetchCoverLetters();
+}, []);
+
     const {isOpen}=useContext(AppContext);
     return (
         <>
-            <div  className={`transition-all duration-300 h-2 bg-gray-200 p-4 ${isOpen ? "md:w-3/4 ml-[25%]" : "md:w-full"} min-h-screen`}>
+            <div  className={`transition-all duration-500 h-2 bg-gray-200 p-4 ${isOpen ? "md:w-3/4 ml-[25%]" : "md:w-full"} min-h-screen overflow-auto `}>
             <div className="rounded-md bg-gray-200 p-6 shadow-md">
                 <h1 className="text-2xl font-bold mb-6 text-center">Your Cover Letters</h1>
                 {coverLetters && coverLetters.length>0 ? 

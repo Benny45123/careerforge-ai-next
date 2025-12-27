@@ -9,12 +9,19 @@ const Design4 = ({data,designRef}) => {
             <p className="text-lg mb-4">{data.role}</p>
 
 
-            <div className="flex flex-col items-center space-y-4 text-sm">
+            <div className="flex flex-col items-center gap-2 text-sm">
+  <p className="flex items-center gap-1 whitespace-nowrap">
+    📧 <span className="font-semibold">Email:</span> {data.email}
+  </p>
+  <p className="flex items-center gap-1 whitespace-nowrap">
+    🔗 <span className="font-semibold">LinkedIn:</span> {data.linkedin}
+  </p>
+  <p className="flex items-center gap-1 whitespace-nowrap">
+    📞 <span className="font-semibold">Phone:</span> {data.phone}
+  </p>
+</div>
 
-                <p>📧 Email: {data.email}</p>
-                <p>🔗 Linkedin: {data.linkedin}</p>
-                <p>📞 Phone: {data.phone}</p>
-            </div>
+
 
             {/* <div className={`h-1 bg-${ACCENT_COLOR} mb-1 -mx-6`}></div> */}
         </div>

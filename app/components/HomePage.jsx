@@ -5,13 +5,28 @@ import Image from 'next/image';
 import { useContext } from 'react';
 import { AppContext } from '@/app/context/AppContext';
 import { useState } from 'react';
+import { redirect } from 'next/navigation';
+import { handleLogout } from '@/app/services/BackendHandler';
 
 
 export default function HomeDesign({children}) {
-  const {user,isOpen,setIsOpen}=useContext(AppContext);
+  const {user,isOpen,setIsOpen,setUser}=useContext(AppContext);
   const [hovered,setHovered]=useState(false);
   const slideMenu=()=>{
     setIsOpen(!isOpen);
+  }
+  const displayCoverLetters=()=>{
+    redirect('/dashboard/cover-letter/display');
+  }
+  const displayResumes=()=>{
+    redirect('/dashboard/resume/display');
+  }
+  const Logout = async()=>{
+    const result=await handleLogout()
+    if(result){
+      setUser(null);
+      window.location.reload();
+    }
   }
   return (
     <div className='overflow-hidden'>
@@ -44,10 +59,10 @@ export default function HomeDesign({children}) {
           <span className='text-gray-500'>{user.email}</span>
           </div>
           <button className='hover:text-gray-400 pr-30 pt-2' onClick={()=>displayCoverLetters()}>Cover-Letters</button>
-          <button className='hover:text-gray-400 pr-39 pt-2' onClick={()=>DisplayResumes()}>Resumes</button>
+          <button className='hover:text-gray-400 pr-39 pt-2' onClick={()=>displayResumes()}>Resumes</button>
           <button className='hover:text-gray-400 pr-48 pt-2'>Jobs</button>
           <span className='text-gray-400'>______________________________________</span>
-          <button onClick={()=>handleLogout({setUser})} className='hover:text-gray-400  p-3 '>Logout</button>
+          <button onClick={()=>Logout({setUser})} className='hover:text-gray-400  p-3 '>Logout</button>
       </div>
       <div className=''>
      {children}

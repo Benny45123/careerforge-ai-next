@@ -6,7 +6,7 @@ const Design1 = ({data,designRef}) => {
           <div ref={designRef} className="w-[794px]  mx-auto m-10 p-10 bg-white">
             <div className="grid grid-cols-[1fr_2px_2.5fr] gap-x-6">
               <div className="pr-4">
-                <h1 className="text-4xl font-bold mb-1">{data.name}</h1>
+                <h1 className="text-4xl  mb-1 font-bold">{data.name}</h1>
                 <p className="text-xl mb-8">{data.role}</p>
       
                 <div className="mt-10">

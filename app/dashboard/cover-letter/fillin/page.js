@@ -2,7 +2,9 @@
 import { useRef, useState } from 'react';
 import { useContext } from 'react';
 import { AppContext } from '@/app/context/AppContext';
-const FillData = ({getFormData}) => {
+import { postData } from '@/app/services/BackendHandler';
+import { redirect } from 'next/navigation';
+const FillData = () => {
   const {isOpen}=useContext(AppContext);
   const jobDescription=useRef('');
   const skills=useRef('');
@@ -21,7 +23,10 @@ const FillData = ({getFormData}) => {
       designation:designation.current.value,
       companyName:companyName.current.value
     };
-    getFormData(data);
+    const result=await postData({data});
+    if(result && result.coverLetter){
+      redirect('/dashboard/cover-letter/select-design');
+    }
 
   }
   const handleDivClick=(e)=>{
@@ -37,7 +42,7 @@ const handleChange=(e)=>{
 }
     return (
     <>
-    <div  className={`min-h-screen flex justify-center items-center p-4  bg-[url('/coverLetterPageDesign.png')] bg-cover bg-center ${isOpen ? 'ml-[25%]': ''} transition-all duration-500 `} >
+    <div  className={`min-h-screen flex justify-center items-center p-4  bg-[url('/coverLetterPageDesign.png')] bg-cover bg-center ${isOpen ? 'ml-[25%]': ''} transition-all duration-500 overflow-auto`} >
 <form onSubmit={handleClick} className={`transition-all duration-500 w-full  h-full bg-white/5  border border-white  shadow-2xl  rounded-3xl  p-10 `}>
     <div>
     <h1 className='font-bold text-center text-4xl font-serif pb-5'>Generate your Cover Letter </h1>

@@ -5,7 +5,18 @@ import previewImage3 from '@/public/cv-preview3.jpg';
 import previewImage4 from '@/public/cv-preview4.jpg';
 import previewImage5 from '@/public/cv-preview5.jpg';
 import previewImage6 from '@/public/cv-preview6.png';
+import { toPng } from 'html-to-image';
+import { jsPDF } from 'jspdf';
 import Image from 'next/image';
+import { useContext, useEffect,useRef,useState } from 'react';
+import { AppContext } from '@/app/context/AppContext';
+import { getCoverLetters } from '@/app/services/BackendHandler';
+import Design1 from '@/app/design/Design1';
+import Design2 from '@/app/design/Design2';
+import Design3 from '@/app/design/Design3';
+import Design4 from '@/app/design/Design4';
+import Design5 from '@/app/design/Design5';
+import Design6 from '@/app/design/Design6';
 const handleDesignSelect = ({design,setIsOpen,setSelectedDesign}) => {
   console.log("Selected design:", design);
   setIsOpen(false);
@@ -14,9 +25,29 @@ const handleDesignSelect = ({design,setIsOpen,setSelectedDesign}) => {
 const handleConfirmDesign = ({selectedDesign,confirmDesign}) => {
   confirmDesign(selectedDesign);
 }
-const SelectDesign = ({ isOpen,setIsOpen,setSelectedDesign,selectedDesign,confirmDesign}) => {
+const SelectDesign = () => {
+  const {isOpen,setIsOpen,setSelectedDesign,selectedDesign,user}=useContext(AppContext); 
+  const [coverLetterData,setCoverLetterData]=useState(null);
+  const designRef =useRef(null);
+  useEffect(()=>{
+    getCoverLetters({setCoverLetterData})
+  })
+  const confirmDesign=async ()=>{
+    if(!designRef.current){ return }
+    const printContent=designRef.current;
+    const imgData = await toPng(printContent, { quality: 1.0 ,pixelRatio: 3,cacheBust:true,fontEmbedCSS: `
+    `,});
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save(`${user.name}_Cover_Letter_${Date.now()}.pdf`);
+  };
+
   return (
-<div style={{marginLeft : isOpen ? '25%' : '0'}} className="transition-all duration-300 md:w-3/4 h-full bg-gray-200 p-4 ">
+    <>
+<div style={{marginLeft : isOpen ? '25%' : '0'}} className="transition-all duration-500 md:w-3/4 h-full bg-gray-200 p-4 ">
     <div className='bg-white p-6 rounded-2xl shadow-md'>
         <h1 className='font-bold text-center pb-5'>Select Your Design</h1>
         <br />
@@ -53,6 +84,21 @@ const SelectDesign = ({ isOpen,setIsOpen,setSelectedDesign,selectedDesign,confir
     </div>
 </div>
 </div>
+{(selectedDesign&&coverLetterData)&&
+    <div style={{ marginLeft: '75%' }}className="transition-all duration-300 md:w-1/4 h-20  p-4 top-100 fixed flex items-center justify-center ">
+      <div className='bg-white p-6 rounded-2xl shadow-2xl w-80 h-auto border border-gray-300'>
+        {selectedDesign ? <h1 className='font-bold text-center pb-5'>Selected Design Preview</h1> :  <h1 className='font-bold text-center pb-5'>No Design Selected</h1>}
+        <br />
+        
+        {selectedDesign==1&&    <div className='overflow-auto  max-h-[450px] w-[250px] border border-gray-200 shadow-md z-0'><Design1 designRef={designRef} data={coverLetterData}/></div>}
+        {selectedDesign==2&&    <div className='overflow-auto max-h-[450px] max-w-[250px] z-0'><Design2 designRef={designRef} data={coverLetterData}/></div>}
+        {selectedDesign==3&&    <div className='overflow-auto max-h-[450px] max-w-[250px] z-0'><Design3 designRef={designRef} data={coverLetterData}/></div>}
+        {selectedDesign==4&&    <div className='overflow-auto max-h-[450px] max-w-[250px] z-0'><Design4 designRef={designRef} data={coverLetterData}/></div>}
+        {selectedDesign==5&&    <div className='overflow-auto max-h-[450px] max-w-[250px] z-0'><Design5 designRef={designRef} data={coverLetterData}/></div>}
+        {selectedDesign==6&&    <div className='overflow-auto max-h-[450px] max-w-[300px] z-0'><Design6 designRef={designRef} data={coverLetterData}/></div>}
+      </div> 
+    </div>}
+</>
   );
 }
 export default SelectDesign;

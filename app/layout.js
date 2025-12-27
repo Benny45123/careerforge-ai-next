@@ -1,6 +1,5 @@
 import "./globals.css";
 import {AppProvider}  from "./context/AppContext";
-import HomeDesign from "./components/HomeDesign";
 export const metadata = {
   title: "careerforge-ai-next",
   description: "",

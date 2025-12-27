@@ -1,10 +1,14 @@
 "use client"
 import {  useRef, useState } from "react";
 import { Register,Login } from "@/app/services/BackendHandler";
+// import { useRouter } from "next/navigation";
 import { useContext } from "react";
-import { AppContext } from "@/app/context/AppContext";
+import { AppContext } from "../context/AppContext";
+import { useRouter } from "next/navigation";
+import { checkLogin } from "@/app/services/BackendHandler";
 
 const Auth=({}) =>{
+    const router=useRouter();
     const {setUser}=useContext(AppContext);
     const email=useRef();
     const password=useRef();
@@ -21,9 +25,13 @@ const Auth=({}) =>{
         const user = name.current.value;
         const emailVal = email.current.value;
         const passwordVal = password.current.value;
-        await Register({name:user,email:emailVal,password:passwordVal});
-        
+        const result=await Register({name:user,email:emailVal,password:passwordVal});
+        if(result){
         setIsSignUpMode(true);
+        }
+        else{
+            alert('username or email aldready exist')
+        }
     } 
     const handleLoginSubmit =async (e) => {
         e.preventDefault();
@@ -31,9 +39,14 @@ const Auth=({}) =>{
         const passwordVal = password.current.value;
         const result=await Login({email:emailVal,password:passwordVal});
         if(result){
-
-            window.location.reload();
-        }   
+            console.log(result);
+            const user=await checkLogin();
+            setUser(user);
+            router.replace("/dashboard")
+        } 
+        else{
+            alert("Invalid Credentials");
+        } 
     }
     return (
         <>

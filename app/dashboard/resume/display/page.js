@@ -1,12 +1,26 @@
 "use client";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "@/app/context/AppContext";
-const DisplayResumes = ({resumes}) => {
+import { getAllResumes } from "@/app/services/BackendHandler";
+const DisplayResumes = () => {
     const {isOpen}=useContext(AppContext);
+    const [resumes,setResumes]=useState([]);
+    useEffect(()=>{
+        const fetchResumes = async () => {
+        try{
+        const resume=await getAllResumes();
+        setResumes(resume);
+        }
+        catch(error){
+            console.error('Error fetching resumes:',error);
+        }
+    }
+    fetchResumes();
+}, []);
     const resumeList=resumes?.resumes||[]
     return (
         <>
-        <div style={{ marginLeft: isOpen ? "25%" : "0" }} className={`transition-all duration-300 h-2 bg-gray-200 p-4 ${isOpen ? "md:w-3/4" : "md:w-full"} min-h-screen`}>
+        <div style={{ marginLeft: isOpen ? "25%" : "0" }} className={`transition-all duration-500 h-2 bg-gray-200 p-4 ${isOpen ? "md:w-3/4" : "md:w-full"} min-h-screen overflow-auto`}>
         <div className="rounded-md bg-gray-200 p-6 shadow-md">
             <h1 className="text-2xl font-bold mb-6 text-center">Your Resumes</h1>
             { resumeList.length>0 ? 

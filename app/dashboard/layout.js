@@ -17,7 +17,7 @@ export default function DashboardLayout({ children }) {
   }
 
   if (user==null) {
-    redirect("/auth")
+    redirect("/")
   }
 
   return <HomeDesign>{children}</HomeDesign>;

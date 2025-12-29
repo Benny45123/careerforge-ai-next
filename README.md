@@ -10,7 +10,6 @@ https://github.com/Benny45123/CareerForge-AI
 
 -   **ATS Resume Score Predictor:** Evaluate your resume against industry benchmarks using AI.
 -   **AI Cover Letter Generator:** Generate professional, job-specific cover letters instantly.
--   **Job Description Summarizer:** Distill long job postings into key requirements and action items.
 -   **Centralized Dashboard:** Track your application assets and history in one place.
 -   **Modern Glassmorphism UI:** Built with a clean, futuristic aesthetic using Tailwind CSS.
 

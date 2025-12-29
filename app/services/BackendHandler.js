@@ -7,7 +7,7 @@ const postData=async ({data}) =>{
     formData.append('recruiterDesignation', data.designation);
     formData.append('companyName', data.companyName);
     try {
-        const response = await fetch('http://localhost:3120/api/cover-letter/generate-cover-letter', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cover-letter/generate-cover-letter`, {
             method: 'POST',
             body: formData,
             credentials:'include'
@@ -23,7 +23,7 @@ const postData=async ({data}) =>{
 const Register=async ({name,email,password}) =>{
     const data={name,email,password};
     try {
-        const response = await fetch('http://localhost:3120/api/register', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/register`, {
             method: 'POST',
             body: JSON.stringify(data),
             credentials:'include',
@@ -45,7 +45,7 @@ const Register=async ({name,email,password}) =>{
 const Login =async ({email,password})=>{
     const data={email,password};
     try {
-        const response =await fetch('http://localhost:3120/api/login',{
+        const response =await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/login`,{
             method:'POST',
             credentials:'include',
             body: JSON.stringify(data),
@@ -69,7 +69,7 @@ const Login =async ({email,password})=>{
 }
 const checkLogin=async()=>{
     try{
-      const response=await fetch('http://localhost:3120/api/user',{
+      const response=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user`,{
         method:'GET',
         credentials:'include',
       });
@@ -91,7 +91,7 @@ const checkLogin=async()=>{
 
   const handleLogout=async ()=>{
     try{
-      const response=await fetch('http://localhost:3120/api/logout',{
+      const response=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/logout`,{
         method:'POST',
         credentials:'include',
       });
@@ -106,7 +106,7 @@ const checkLogin=async()=>{
   }
   const getCoverLetters=async ({setCoverLetterData})=>{
     try{
-      const response=await fetch('http://localhost:3120/api/cover-letter/user/cover-letters',{
+      const response=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cover-letter/user/cover-letters`,{
         method:'GET',
         credentials:'include',
       })
@@ -126,7 +126,7 @@ const checkLogin=async()=>{
   }
   const getAllCoverLetters=async ()=>{
     try{
-      const response=await fetch('http://localhost:3120/api/cover-letter/user/cover-letters',{
+      const response=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cover-letter/user/cover-letters`,{
         method:'GET',
         credentials:'include',
       })
@@ -151,7 +151,7 @@ const checkLogin=async()=>{
     formData.append('jobDescription', data.jobDescription);
     formData.append('resume', data.resume);
     try {
-      const response = await fetch('http://localhost:3120/api/resume/analyze-resume', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/resume/analyze-resume`, {
           method: 'POST',
           body: formData,
           credentials:'include'
@@ -166,7 +166,7 @@ const checkLogin=async()=>{
   }
   const getAllResumes=async ()=>{
     try{
-      const response=await fetch('http://localhost:3120/api/resume/user/resumes',{
+      const response=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/resume/user/resumes`,{
         method:'GET',
         credentials:'include',
       })

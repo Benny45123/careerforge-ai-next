@@ -65,5 +65,13 @@ https://github.com/Benny45123/CareerForge-AI
 ├── lib/              # MongoDB connection & Gemini API wrappers
 ├── public/           # Static assets & Icons
 └── styles/           # Global CSS
+```
+## 🚀 Live Deployment
 
-Developed by Benny
+🔴 **Production URL:**  
+https://careerforge-ai-next.vercel.app/
+
+Hosted on **Vercel** using Next.js App Router for optimal performance and scalability.
+
+
+## Developed by Benny

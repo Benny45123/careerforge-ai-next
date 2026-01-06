@@ -202,7 +202,7 @@ const checkLogin=async()=>{
   const resendOtp=async ({userId,email})=>{
     try{
     const data = {userId,email}
-    console.log(data)
+    // console.log(data)
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/resend-otp`,{
       method:'POST',
       credentials:'include',

@@ -33,8 +33,9 @@ const Register=async ({name,email,password}) =>{
         })
         const result = await response.json();
         if(response.ok){
-          console.log(result);
-          return true;
+          // console.log("Register result: ",result);
+          // return true;
+          return result;
         }
         return false;
     }
@@ -55,12 +56,12 @@ const Login =async ({email,password})=>{
         })
         const result =await response.json();
         if(response.ok){
-            console.log('Success:', result.message);
+            // console.log('Success:', result.message);
             return true;
         }
         else{
+          // console.log(result);
             throw new Error(result.message);
-            return false
         }
     }
     catch(error){
@@ -157,7 +158,7 @@ const checkLogin=async()=>{
           credentials:'include'
       });
       const result = await response.json();
-      console.log(result);
+      // console.log(result);
       return result;
     }
     catch (error) {
@@ -180,5 +181,47 @@ const checkLogin=async()=>{
       console.error('Error:',error);
     }
   }
+  const verifyOtp= async ({userId,otp})=>{
+    const data = {userId,otp}
+    // console.log(userId);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/verify-otp`,{
+      method:'POST',
+      credentials:'include',
+      body:JSON.stringify(data),
+      headers:{
+        'Content-Type':'application/json'
+      },
+    })
+    const result=await response.json();
+    if(result.verified==true){
+      // console.log(result.message);
+      return true;
+    }
 
-export {postData,Register,Login,checkLogin,handleLogout,getCoverLetters,getAllCoverLetters,postResumeData,getAllResumes};  
+  }
+  const resendOtp=async ({userId,email})=>{
+    try{
+    const data = {userId,email}
+    console.log(data)
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/resend-otp`,{
+      method:'POST',
+      credentials:'include',
+      body:JSON.stringify(data),
+      headers:{
+        'Content-Type':'application/json'
+      },
+    })
+    const result=await response.json();
+    if(result.status==="Pending.."){
+      // console.log("Resend success",result);
+      return {result,Message:"Resend Otp successful"}
+    }
+    return {result,Message:"Resend Unsuccessful"}
+  }
+  catch(err){
+    console.error("Something went wrong",err);
+  }
+
+  }
+
+export {postData,Register,Login,checkLogin,handleLogout,getCoverLetters,getAllCoverLetters,postResumeData,getAllResumes,verifyOtp,resendOtp};  

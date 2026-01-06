@@ -44,7 +44,7 @@ export default function HomeDesign({children}) {
 </svg>
           <input type="text" placeholder='Search..' className='focus:outline-none w-full'/>
         </div>
-        <div className="absolute border border-gray-300  rounded-3xl right-1/80 p-2 flex items-center space-x-2 h-15 bg-white hover:shadow-lg " onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+        <div className="absolute border border-gray-300  rounded-3xl right-1/80 p-2 flex items-center space-x-2 h-15 bg-white hover:shadow-lg cursor-pointer" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
           <Image src='/user.png' className="rounded-full  h-12 w-12" width='100' height='100' />
           <div className='flex flex-col text-left'>
           <span className=''>{user.name}</span>
@@ -52,17 +52,17 @@ export default function HomeDesign({children}) {
           </div>
         </div>
       </div>
-      <div style={{opacity: hovered ? '1.0' : '0.0'}} className='absolute border border-gray-300  rounded-3xl right-1/80  flex flex-col p-2 bg-white hover:shadow-2xl transition-opacity duration-300  w-70 z-1'onMouseEnter={() => {hovered&&setHovered(true)}} onMouseLeave={() => setHovered(false)}>
+      <div style={{opacity: hovered ? '1.0' : '0.0'}} className='absolute border border-gray-300  rounded-3xl right-1/80  flex flex-col p-2 bg-white hover:shadow-2xl transition-opacity duration-300  w-70 z-1 'onMouseEnter={() => {hovered&&setHovered(true)}} onMouseLeave={() => setHovered(false)}>
           <div className='flex flex-col items-center justify-center p-3 space-y-3'>
           <Image src='/user.png' className="rounded-full  h-12 w-12" width='100' height='100' />
           <span className='text-2xl font-extrabold'>{user.name}</span>
           <span className='text-gray-500'>{user.email}</span>
           </div>
-          <button className='hover:text-gray-400 pr-30 pt-2' onClick={()=>displayCoverLetters()}>Cover-Letters</button>
-          <button className='hover:text-gray-400 pr-39 pt-2' onClick={()=>displayResumes()}>Resumes</button>
-          <button className='hover:text-gray-400 pr-48 pt-2'>Jobs</button>
+          <button className='hover:text-gray-400 pr-30 pt-2 cursor-pointer' onClick={()=>displayCoverLetters()}>Cover-Letters</button>
+          <button className='hover:text-gray-400 pr-39 pt-2 cursor-pointer' onClick={()=>displayResumes()}>Resumes</button>
+          <button className='hover:text-gray-400 pr-48 pt-2 cursor-pointer'>Jobs</button>
           <span className='text-gray-400'>______________________________________</span>
-          <button onClick={()=>Logout({setUser})} className='hover:text-gray-400  p-3 '>Logout</button>
+          <button onClick={()=>Logout({setUser})} className='hover:text-gray-400  p-3 cursor-pointer'>Logout</button>
       </div>
       <div className=''>
      {children}

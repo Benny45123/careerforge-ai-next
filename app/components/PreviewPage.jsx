@@ -17,10 +17,10 @@ export default function PreviewPage() {
           </p>
           <div className="mt-10 flex gap-4">
             <Link href="/auth" className="transition-all duration-300">
-            <button className="px-5 py-3 bg-teal-500 text-white rounded-lg shadow hover:bg-teal-600 transition">Get Started</button>
+            <button className="px-5 py-3 bg-teal-500 text-white rounded-lg shadow hover:bg-teal-600 transition cursor-pointer">Get Started</button>
             </Link>
             {/* <a href="#features" className="transition-all duration-300 scroll-mt-24"> */}
-            <button onClick={() => {document.getElementById("features")?.scrollIntoView({ behavior: "smooth"});}} className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-100 transition">See How It Works</button>
+            <button onClick={() => {document.getElementById("features")?.scrollIntoView({ behavior: "smooth"});}} className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-100 transition cursor-pointer">See How It Works</button>
 
             {/* </a> */}
           </div>

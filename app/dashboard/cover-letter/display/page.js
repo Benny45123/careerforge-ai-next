@@ -20,10 +20,9 @@ const DisplayCoverLetters = () => {
     fetchCoverLetters();
 }, []);
 
-    const {isOpen}=useContext(AppContext);
     return (
         <>
-            <div  className={`transition-all duration-500 h-2 bg-gray-200 p-4 ${isOpen ? "md:w-3/4 ml-[25%]" : "md:w-full"} min-h-screen overflow-auto `}>
+            <div  className={`transition-all duration-500 h-2 bg-gray-200 p-4 md:w-full min-h-screen overflow-auto `}>
             <div className="rounded-md bg-gray-200 p-6 shadow-md">
                 <h1 className="text-2xl font-bold mb-6 text-center">Your Cover Letters</h1>
                 {coverLetters && coverLetters.length>0 ? 

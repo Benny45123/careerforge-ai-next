@@ -1,13 +1,11 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useContext } from "react";
-import { AppContext } from "@/app/context/AppContext";
+
 
 const NavBar=() => {
     const pathname=usePathname();
     const isActive=(path) => pathname===path;
-    const {isOpen}=useContext(AppContext);
     return(
         <>
     <div className={`md:w-1/4 fixed top-15 left-0 h-screen border-r border-gray-300 p-4 space-y-6 bg-white  shadow-md transition-transform duration-500  ${isOpen ? "translate-x-0" : "-translate-x-full"}`}>

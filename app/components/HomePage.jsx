@@ -9,16 +9,16 @@ import { redirect } from 'next/navigation';
 import { handleLogout } from '@/app/services/BackendHandler';
 import { usePathname } from 'next/navigation';
 import Link from "next/link";
-
-
+import {Montserrat,M_PLUS_Rounded_1c,Outfit} from 'next/font/google'
+const montserrat=Montserrat({subsets:['latin'],weight:['400','700']});
+const mplus=M_PLUS_Rounded_1c({subsets:['latin'],weight:['400','700']});
+const outfit=Outfit({subsets:['latin'],weight:['400','700']});
 export default function HomeDesign({children}) {
   const pathname=usePathname();
   const isActive=(path) => pathname===path;
-  const {user,isOpen,setIsOpen,setUser}=useContext(AppContext);
+  const {user,setUser}=useContext(AppContext);
   const [hovered,setHovered]=useState(false);
-  const slideMenu=()=>{
-    setIsOpen(!isOpen);
-  }
+
   const displayCoverLetters=()=>{
     redirect('/dashboard/cover-letter/display');
   }
@@ -33,11 +33,11 @@ export default function HomeDesign({children}) {
     }
   }
   return (
-    <div className='overflow-hidden bg-gradient-to-br from-slate-950  to-slate-950 min-h-screen w-full  '>
+    <div className={`overflow-hidden bg-gradient-to-br from-slate-950  to-slate-950 min-h-screen w-full  ${mplus.className} `}>
       {/* <button onClick={slideMenu} className="fixed mt-0.5 h-1/14 p-5 hover:bg-gray-300  rounded-md   "><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-list" viewBox="0 0 15 15">
   <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
 </svg></button> */}
-      <div  className=" p-6 bg-slate-950 pt-11 fixed  flex justify-center space-x-10 min-w-full " >
+      <div  className=" p-6 bg-slate-950 pt-11 fixed  flex justify-center space-x-10 min-w-full z-120" >
         <div className='flex flex-row fixed left-10 top-8 '>
         <Image src='/CareerForgeAiLogo.png' className='h-13 w-13 rounded-full -translate-y-1' width='100' height='100'/>
         <span className=' text-transparent bg-clip-text bg-gradient-to-b from-white via-slate-300 to-slate-700 font-serif text-center ml-2 mt-3'>CareerForge AI</span>
@@ -84,7 +84,7 @@ export default function HomeDesign({children}) {
           <button onClick={()=>Logout({setUser})} className='hover:text-gray-400  p-3 cursor-pointer'>Logout</button>
       </div> */}
       <div 
-              className={`z-10 absolute right-0 mt-20 w-64 rounded-2xl bg-slate-900/95 backdrop-blur-xl border border-white/5 shadow-2xl transition-all duration-500 ${
+              className={`z-10 absolute right-10 mt-25 w-64 rounded-2xl bg-slate-900/95 backdrop-blur-xl border border-white/5 shadow-2xl transition-all duration-500 ${
                 hovered ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-3 pointer-events-none'
               }`}
               onMouseEnter={() => setHovered(true)}

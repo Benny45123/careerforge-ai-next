@@ -17,16 +17,15 @@ import Design3 from '@/app/design/Design3';
 import Design4 from '@/app/design/Design4';
 import Design5 from '@/app/design/Design5';
 import Design6 from '@/app/design/Design6';
-const handleDesignSelect = ({design,setIsOpen,setSelectedDesign}) => {
+const handleDesignSelect = ({design,setSelectedDesign}) => {
   console.log("Selected design:", design);
-  setIsOpen(false);
   setSelectedDesign(design);
 }
 const handleConfirmDesign = ({selectedDesign,confirmDesign}) => {
   confirmDesign(selectedDesign);
 }
 const SelectDesign = () => {
-  const {isOpen,setIsOpen,setSelectedDesign,selectedDesign,user}=useContext(AppContext); 
+  const {setSelectedDesign,selectedDesign,user}=useContext(AppContext); 
   const [coverLetterData,setCoverLetterData]=useState(null);
   const designRef =useRef(null);
   useEffect(()=>{
@@ -47,34 +46,34 @@ const SelectDesign = () => {
 
   return (
     <>
-<div style={{marginLeft : isOpen ? '25%' : '0'}} className="transition-all duration-500 md:w-3/4 h-full bg-gray-200 p-4 ">
+<div  className="transition-all duration-500 md:w-3/4 h-full bg-gray-200 p-4 ">
     <div className='bg-white p-6 rounded-2xl shadow-md'>
         <h1 className='font-bold text-center pb-5'>Select Your Design</h1>
         <br />
         <div className='grid md:grid-cols-3 gap-4 m-2'>
-          <div className='border border-gray-300 rounded-lg p-4 hover:shadow-md shadow-cyan-400'onClick={() => handleDesignSelect({design:1,setIsOpen,setSelectedDesign})}>
+          <div className='border border-gray-300 rounded-lg p-4 hover:shadow-md shadow-cyan-400'onClick={() => handleDesignSelect({design:1,setSelectedDesign})}>
             <h2 className='font-semibold text-center mb-2'>Design 1</h2>
             <div className=' flex items-center justify-center'><Image src={previewImage}/></div>
           </div>
-          <div className='border border-gray-300 rounded-lg p-4 hover:shadow-md shadow-fuchsia-400'onClick={() => handleDesignSelect({design:2,setIsOpen,setSelectedDesign})}>
+          <div className='border border-gray-300 rounded-lg p-4 hover:shadow-md shadow-fuchsia-400'onClick={() => handleDesignSelect({design:2,setSelectedDesign})}>
             <h2 className='font-semibold text-center mb-2'>Design 2</h2>
             <div className='flex items-center justify-center'><Image src={previewImage2}/></div>
           </div>
-          <div className='border border-gray-300 rounded-lg p-4 hover:shadow-md shadow-purple-400'onClick={() => handleDesignSelect({design:3,setIsOpen,setSelectedDesign})}>
+          <div className='border border-gray-300 rounded-lg p-4 hover:shadow-md shadow-purple-400'onClick={() => handleDesignSelect({design:3,setSelectedDesign})}>
             <h2 className='font-semibold text-center mb-2'>Design 3</h2>
             <div className=' flex items-center justify-center'><Image src={previewImage3}/></div>
           </div>
         </div>
     <div className='grid md:grid-cols-3 gap-4 m-2'>
-        <div className='border border-gray-300 rounded-lg p-4 hover:shadow-md shadow-rose-400'onClick={() => handleDesignSelect({design:4,setIsOpen,setSelectedDesign})}>
+        <div className='border border-gray-300 rounded-lg p-4 hover:shadow-md shadow-rose-400'onClick={() => handleDesignSelect({design:4,setSelectedDesign})}>
             <h2 className='font-semibold text-center mb-2'>Design 4</h2>
             <div className=' flex items-center justify-center'><Image src={previewImage4}/></div>
         </div>
-        <div className='border border-gray-300 rounded-lg p-4 hover:shadow-md shadow-indigo-400'onClick={() => handleDesignSelect({design:5,setIsOpen,setSelectedDesign})}>
+        <div className='border border-gray-300 rounded-lg p-4 hover:shadow-md shadow-indigo-400'onClick={() => handleDesignSelect({design:5,setSelectedDesign})}>
             <h2 className='font-semibold text-center mb-2'>Design 5</h2>
             <div className=' flex items-center justify-center'><Image src={previewImage5}/></div>
         </div>
-        <div className='border border-gray-300 rounded-lg p-4 hover:shadow-md shadow-emerald-400'onClick={() => handleDesignSelect({design:6,setIsOpen,setSelectedDesign})}>
+        <div className='border border-gray-300 rounded-lg p-4 hover:shadow-md shadow-emerald-400'onClick={() => handleDesignSelect({design:6,setSelectedDesign})}>
             <h2 className='font-semibold text-center mb-2'>Design 6</h2>
             <div className=' flex items-center justify-center'><Image src={previewImage6}/></div>
         </div>

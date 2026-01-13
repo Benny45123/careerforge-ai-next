@@ -8,7 +8,7 @@ export function AppProvider({ children }) {
     // const [user, setUser] = useState({name:"Hari",email:"hari@gmail.com"});
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [isOpen, setIsOpen] = useState(false);
+    // const [isOpen, setIsOpen] = useState(false);
     const [selectedDesign, setSelectedDesign] = useState(null);
     useEffect(() => {
       const fetchUser = async () => {
@@ -30,8 +30,6 @@ export function AppProvider({ children }) {
           setUser,
           loading,
           setLoading,
-          isOpen,
-          setIsOpen,
           selectedDesign,
           setSelectedDesign,
         }}

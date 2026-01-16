@@ -52,9 +52,9 @@ export default function HomeDesign({children}) {
           <input type="text" placeholder='Search..' className='focus:outline-none w-full'/>
         </div> */}
         <div className=' flex flex-row items-center space-x-20'>
-          <Link href='/dashboard/cover-letter/fillin' className={`  ${isActive('/dashboard/cover-letter/fillin')? 'text-white': 'bg-clip-text bg-gradient-to-b from-slate-950 via-slate-400 to-white text-transparent opacity-80 hover:opacity-100'}`}>Cover letter</Link>
-          <Link href='/dashboard/resume' className={`${isActive('/dashboard/resume')? 'text-white': 'bg-clip-text bg-gradient-to-b from-slate-950 via-slate-400 to-white text-transparent opacity-80 hover:opacity-100'}`}>Resume</Link>
-          <Link href='/dashboard/job' className={`${isActive('/dashboard/job')? 'text-white': 'bg-clip-text bg-gradient-to-b from-slate-950 via-slate-400 to-white text-transparent opacity-80 hover:opacity-100'}`}>Jobs</Link>
+          <Link href='/dashboard/cover-letter/fillin' className={`  ${isActive('/dashboard/cover-letter/fillin')? 'text-white': 'bg-clip-text bg-gradient-to-b from-slate-400 via-slate-400 to-white text-transparent opacity-80 hover:opacity-100'}`}>Cover letter</Link>
+          <Link href='/dashboard/resume' className={`${isActive('/dashboard/resume')? 'text-white': 'bg-clip-text bg-gradient-to-b from-slate-400 via-slate-400 to-white text-transparent opacity-80 hover:opacity-100'}`}>Resume</Link>
+          <Link href='/dashboard/job' className={`${isActive('/dashboard/job')? 'text-white': 'bg-clip-text bg-gradient-to-b from-slate-400 via-slate-400 to-white text-transparent opacity-80 hover:opacity-100'}`}>Jobs</Link>
 
         </div>
         {/* <div className="absolute    right-2   cursor-pointer" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}> */}
@@ -84,7 +84,7 @@ export default function HomeDesign({children}) {
           <button onClick={()=>Logout({setUser})} className='hover:text-gray-400  p-3 cursor-pointer'>Logout</button>
       </div> */}
       <div 
-              className={`z-10 absolute right-10 mt-25 w-64 rounded-2xl bg-slate-900/95 backdrop-blur-xl border border-white/5 shadow-2xl transition-all duration-500 ${
+              className={`z-10 absolute right-2 mt-25 w-64 rounded-2xl bg-slate-900/95 backdrop-blur-xl border border-white/5 shadow-2xl transition-all duration-500 ${
                 hovered ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-3 pointer-events-none'
               }`}
               onMouseEnter={() => setHovered(true)}

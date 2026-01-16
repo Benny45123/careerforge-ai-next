@@ -17,6 +17,8 @@ import Design3 from '@/app/design/Design3';
 import Design4 from '@/app/design/Design4';
 import Design5 from '@/app/design/Design5';
 import Design6 from '@/app/design/Design6';
+import { Syne } from "next/font/google";
+const syne=Syne({subsets:['latin'],weight:['400','700']});
 const handleDesignSelect = ({design,setSelectedDesign}) => {
   console.log("Selected design:", design);
   setSelectedDesign(design);
@@ -44,39 +46,32 @@ const SelectDesign = () => {
     pdf.save(`${user.name}_Cover_Letter_${Date.now()}.pdf`);
   };
 
+  const designs = [
+    { id: 1, name: 'Design 1', image: previewImage, gradient: 'from-cyan-500/20 to-blue-500/20' },
+    { id: 2, name: 'Design 2', image: previewImage2, gradient: 'from-fuchsia-500/20 to-pink-500/20' },
+    { id: 3, name: 'Design 3', image: previewImage3, gradient: 'from-purple-500/20 to-indigo-500/20' },
+    { id: 4, name: 'Design 4', image: previewImage4, gradient: 'from-rose-500/20 to-red-500/20' },
+    { id: 5, name: 'Design 5', image: previewImage5, gradient: 'from-indigo-500/20 to-violet-500/20' },
+    { id: 6, name: 'Design 6', image: previewImage6, gradient: 'from-emerald-500/20 to-teal-500/20' },
+  ];
+
   return (
     <>
-<div  className="transition-all duration-500 md:w-3/4 h-full bg-gray-200 p-4 ">
-    <div className='bg-white p-6 rounded-2xl shadow-md'>
-        <h1 className='font-bold text-center pb-5'>Select Your Design</h1>
+<div  className="transition-all duration-500 md:w-3/4 h-full bg-white/10 p-4 rounded-2xl shadow-2xl border border-gray-300">
+    <div className=' p-6 rounded-3xl shadow-md '>
+        <h1 className={`font-bold text-center pb-5 text-5xl text-transparent bg-clip-text bg-gradient-to-r from-violet-700 via-pink-700 to-purple-700 animate-gradient-move ${syne.className}`}>Select Your Design</h1>
         <br />
-        <div className='grid md:grid-cols-3 gap-4 m-2'>
-          <div className='border border-gray-300 rounded-lg p-4 hover:shadow-md shadow-cyan-400'onClick={() => handleDesignSelect({design:1,setSelectedDesign})}>
-            <h2 className='font-semibold text-center mb-2'>Design 1</h2>
-            <div className=' flex items-center justify-center'><Image src={previewImage}/></div>
-          </div>
-          <div className='border border-gray-300 rounded-lg p-4 hover:shadow-md shadow-fuchsia-400'onClick={() => handleDesignSelect({design:2,setSelectedDesign})}>
-            <h2 className='font-semibold text-center mb-2'>Design 2</h2>
-            <div className='flex items-center justify-center'><Image src={previewImage2}/></div>
-          </div>
-          <div className='border border-gray-300 rounded-lg p-4 hover:shadow-md shadow-purple-400'onClick={() => handleDesignSelect({design:3,setSelectedDesign})}>
-            <h2 className='font-semibold text-center mb-2'>Design 3</h2>
-            <div className=' flex items-center justify-center'><Image src={previewImage3}/></div>
-          </div>
-        </div>
-    <div className='grid md:grid-cols-3 gap-4 m-2'>
-        <div className='border border-gray-300 rounded-lg p-4 hover:shadow-md shadow-rose-400'onClick={() => handleDesignSelect({design:4,setSelectedDesign})}>
-            <h2 className='font-semibold text-center mb-2'>Design 4</h2>
-            <div className=' flex items-center justify-center'><Image src={previewImage4}/></div>
-        </div>
-        <div className='border border-gray-300 rounded-lg p-4 hover:shadow-md shadow-indigo-400'onClick={() => handleDesignSelect({design:5,setSelectedDesign})}>
-            <h2 className='font-semibold text-center mb-2'>Design 5</h2>
-            <div className=' flex items-center justify-center'><Image src={previewImage5}/></div>
-        </div>
-        <div className='border border-gray-300 rounded-lg p-4 hover:shadow-md shadow-emerald-400'onClick={() => handleDesignSelect({design:6,setSelectedDesign})}>
-            <h2 className='font-semibold text-center mb-2'>Design 6</h2>
-            <div className=' flex items-center justify-center'><Image src={previewImage6}/></div>
-        </div>
+        <div className='grid md:grid-cols-3 gap-6 mb-6'>
+          {designs.map((design)=>(
+            <div key={design.id} className={`border-2 bg-gradient-to-br ${design.gradient} rounded-lg p-4 cursor-pointer hover:scale-105 transform transition-all duration-500 ${selectedDesign===design.id ? 'border-blue-500 shadow-lg' : 'border-transparent hover:border-gray-300'}`} onClick={()=>handleDesignSelect({design:design.id,setSelectedDesign})}>
+              <div className={` p-3 rounded-lg`}>
+                <Image src={design.image} alt={design.name} className="w-full h-auto rounded-lg shadow-md" />
+              </div>
+              <h2 className="text-center mt-2 text-white font-semibold">{design.name}</h2>
+            </div>
+          )
+            
+          )}
     </div>
     <div className='flex justify-center pb-5'>
     <button onClick={()=>handleConfirmDesign({selectedDesign,confirmDesign})} className='mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md'>Confirm Design</button>
@@ -85,8 +80,8 @@ const SelectDesign = () => {
 </div>
 {(selectedDesign&&coverLetterData)&&
     <div style={{ marginLeft: '75%' }}className="transition-all duration-300 md:w-1/4 h-20  p-4 top-100 fixed flex items-center justify-center ">
-      <div className='bg-white p-6 rounded-2xl shadow-2xl w-80 h-auto border border-gray-300'>
-        {selectedDesign ? <h1 className='font-bold text-center pb-5'>Selected Design Preview</h1> :  <h1 className='font-bold text-center pb-5'>No Design Selected</h1>}
+      <div className='bg-white/10 p-6 rounded-2xl shadow-2xl w-80 h-auto border border-gray-300'>
+        {selectedDesign ? <h1 className={`font-bold text-center pb-5 text-white ${syne.className}`}>Selected Design Preview</h1> :  <h1 className='font-bold text-center pb-5'>No Design Selected</h1>}
         <br />
         
         {selectedDesign==1&&    <div className='overflow-auto  max-h-[450px] w-[250px] border border-gray-200 shadow-md z-0'><Design1 designRef={designRef} data={coverLetterData}/></div>}

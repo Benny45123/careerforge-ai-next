@@ -2,6 +2,9 @@
 import { useContext,useEffect,useState } from "react";
 import { AppContext } from "@/app/context/AppContext";
 import { getAllCoverLetters } from "@/app/services/BackendHandler";
+import { Buda ,Syne} from "next/font/google";
+const buda=Buda({subsets:['latin'],weight:['300']});
+const syne=Syne({subsets:['latin'],weight:['400','700']});
 const DisplayCoverLetters = () => {
     // console.log("Cover letter data in DisplayCoverLetters.jsx:",coverLetters);
     // const coverLetters=coverLetterData.coverLetters;
@@ -22,17 +25,17 @@ const DisplayCoverLetters = () => {
 
     return (
         <>
-            <div  className={`transition-all duration-500 h-2 bg-gray-200 p-4 md:w-full min-h-screen overflow-auto `}>
-            <div className="rounded-md bg-gray-200 p-6 shadow-md">
-                <h1 className="text-2xl font-bold mb-6 text-center">Your Cover Letters</h1>
+            <div  className={`transition-all duration-500 h-2 bg-transparent p-4 md:w-full min-h-screen overflow-auto `}>
+            <div className=" bg-white/10 border-gray-300 rounded-lg p-6 shadow-md">
+                <h1 className={`text-5xl font-bold mb-6 text-center text-white ${syne.className}`}>Your Cover Letters</h1>
                 {coverLetters && coverLetters.length>0 ? 
                 (<div className="grid md:grid-cols-3 gap-5">
                     {
                         coverLetters.map(letter =>(
-                            <div key={letter._id} className="border border-gray-300 rounded-lg p-4 bg-white shadow-sm hover:shadow-md transition-shadow duration-300">
-                            <h2 className="text-xl font-semibold mb-4">Cover Letter for {letter.role}</h2>
-                            <p className="text-gray-700 whitespace-pre-wrap">{letter.generatedLetter}</p>
-                            <p className="text-gray-500 text-sm mt-4">Generated on: {letter.createdAt}</p>
+                            <div key={letter._id} className="border border-gray-300 rounded-lg p-4 bg-white/10 shadow-sm hover:shadow-md transition-shadow duration-300">
+                            <h2 className={`text-xl font-bold mb-4 text-white `}>Cover Letter for {letter.role}</h2>
+                            <p className={`text-white/80 whitespace-pre-wrap ${buda.className}`}>{letter.generatedLetter}</p>
+                            <p className="text-white/30 text-sm mt-4">Generated on: {letter.createdAt}</p>
                             </div>
                         ))
                     }  

@@ -3,10 +3,12 @@ import {  useEffect, useState } from "react";
 
 import { getAllResumes } from "@/app/services/BackendHandler";
 import { Syne,Buda} from "next/font/google";
+import { useRouter } from "next/navigation";
 const buda=Buda({subsets:['latin'],weight:['300']});
 const syne=Syne({subsets:['latin'],weight:['400','700']});
 const DisplayResumes = () => {
     const [resumes,setResumes]=useState([]);
+    const router=useRouter();
     useEffect(()=>{
         const fetchResumes = async () => {
         try{
@@ -39,7 +41,7 @@ const DisplayResumes = () => {
                 }  
             </div>) : <div className="text-center text-gray-500">No Resumes found. Create one now!</div>}
             <div className="flex justify-center">
-            <button onClick={() => window.history.back()} className='mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md '>Go Back</button>
+            <button onClick={() => {router.push('/dashboard')}} className='mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md '>Go Back</button>
             </div>
         </div>
     </div>

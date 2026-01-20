@@ -3,9 +3,11 @@ import { useContext,useEffect,useState } from "react";
 import { AppContext } from "@/app/context/AppContext";
 import { getAllCoverLetters } from "@/app/services/BackendHandler";
 import { Buda ,Syne} from "next/font/google";
+import { useRouter } from "next/navigation";
 const buda=Buda({subsets:['latin'],weight:['300']});
 const syne=Syne({subsets:['latin'],weight:['400','700']});
 const DisplayCoverLetters = () => {
+    const router=useRouter();
     // console.log("Cover letter data in DisplayCoverLetters.jsx:",coverLetters);
     // const coverLetters=coverLetterData.coverLetters;
     const [coverLetters,setCoverLetters]=useState([]);
@@ -41,7 +43,7 @@ const DisplayCoverLetters = () => {
                     }  
                 </div>) : <div className="text-center text-gray-500">No cover letters found. Create one now!</div>}
                 <div className="flex justify-center">
-                <button onClick={() => window.history.back()} className='mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md '>Go Back</button>
+                <button onClick={() => router.push('/dashboard')} className='mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md '>Go Back</button>
                 </div>
             </div>
         </div>

@@ -1,12 +1,18 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "@/app/context/AppContext";
 import HomeDesign from "@/app/components/HomePage";
-import { redirect } from "next/navigation";
+import {  useRouter } from "next/navigation";
 
 export default function DashboardLayout({ children }) {
   const { user, loading } = useContext(AppContext);
+  const router=useRouter();
+  useEffect(()=>{
+    if(!loading && !user){
+      router.replace("/");
+    }
+  },[loading,user,router]);
 
   if (loading) {
     return (
@@ -16,8 +22,8 @@ export default function DashboardLayout({ children }) {
     );
   }
 
-  if (user==null) {
-    redirect("/")
+  if (!user) {
+    return null;
   }
 
   return <HomeDesign>{children}</HomeDesign>;

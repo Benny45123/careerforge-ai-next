@@ -1,29 +1,30 @@
 "use client"
 
-import FillData from '../dashboard/cover-letter/fillin/page';
+import FillData from '../dashboard/cover-letter/fillin/FillData';
 import Image from 'next/image';
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
 import { AppContext } from '@/app/context/AppContext';
 import { useState } from 'react';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { handleLogout } from '@/app/services/BackendHandler';
 import { usePathname } from 'next/navigation';
-import Link from "next/link";
+import ResumePage from '../dashboard/resume/ResumePage';
 import {Montserrat,M_PLUS_Rounded_1c,Outfit} from 'next/font/google'
 const montserrat=Montserrat({subsets:['latin'],weight:['400','700']});
 const mplus=M_PLUS_Rounded_1c({subsets:['latin'],weight:['400','700']});
 const outfit=Outfit({subsets:['latin'],weight:['400','700']});
 export default function HomeDesign({children}) {
   const pathname=usePathname();
-  const isActive=(path) => pathname===path;
+  const resumeRef=useRef(null);
+  const coverLetterRef=useRef(null);
   const {user,setUser}=useContext(AppContext);
   const [hovered,setHovered]=useState(false);
-
+  const router=useRouter();
   const displayCoverLetters=()=>{
-    redirect('/dashboard/cover-letter/display');
+    router.push('/dashboard/cover-letter/display');
   }
   const displayResumes=()=>{
-    redirect('/dashboard/resume/display');
+    router.push('/dashboard/resume/display');
   }
   const Logout = async()=>{
     const result=await handleLogout()
@@ -31,6 +32,13 @@ export default function HomeDesign({children}) {
       setUser(null);
       window.location.reload();
     }
+  }
+  const scrollIntoSection=(elementRef)=>{
+    setTimeout(()=>{
+      if (elementRef.current){
+        elementRef.current.scrollIntoView({behavior:'smooth',block:'start'});
+      }
+    },100);
   }
   return (
     <div className={`overflow-hidden bg-gradient-to-br from-slate-950  to-slate-950 min-h-screen w-full  ${mplus.className} `}>
@@ -52,14 +60,14 @@ export default function HomeDesign({children}) {
           <input type="text" placeholder='Search..' className='focus:outline-none w-full'/>
         </div> */}
         <div className=' flex flex-row items-center space-x-20'>
-          <Link href='/dashboard/cover-letter/fillin' className={`  ${isActive('/dashboard/cover-letter/fillin')? 'text-white': 'bg-clip-text bg-gradient-to-b from-slate-400 via-slate-400 to-white text-transparent opacity-80 hover:opacity-100'}`}>Cover letter</Link>
-          <Link href='/dashboard/resume' className={`${isActive('/dashboard/resume')? 'text-white': 'bg-clip-text bg-gradient-to-b from-slate-400 via-slate-400 to-white text-transparent opacity-80 hover:opacity-100'}`}>Resume</Link>
-          <Link href='/dashboard/job' className={`${isActive('/dashboard/job')? 'text-white': 'bg-clip-text bg-gradient-to-b from-slate-400 via-slate-400 to-white text-transparent opacity-80 hover:opacity-100'}`}>Jobs</Link>
+          <button onClick={()=>{scrollIntoSection(coverLetterRef)}}  className={`  ${pathname=='/dashboard' ? 'text-white':'text-transparent'} opacity-60 hover:opacity-100`}>Cover letter</button>
+          <button onClick={()=>{scrollIntoSection(resumeRef)}}  className={`${pathname=='/dashboard' ? 'text-white':'text-transparent'} opacity-60 hover:opacity-100`}>Resume</button>
+          <button  className={`${pathname=='/dashboard' ? 'text-white':'text-transparent'} opacity-60 hover:opacity-100`}>Jobs</button>
 
         </div>
         {/* <div className="absolute    right-2   cursor-pointer" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}> */}
           {/* <Image src='/user.png' className="rounded-full  h-12 w-12" width='100' height='100' /> */}
-          <div className="fixed w-11 h-11 rounded-full -translate-y-4 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold right-3 cursor-pointer" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+          <div  className="fixed w-11 h-11 rounded-full -translate-y-4 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold right-3 cursor-pointer" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
                 {user.name.charAt(0).toUpperCase()}
               </div>
           {/* <div className='flex flex-col text-left'>
@@ -116,8 +124,18 @@ export default function HomeDesign({children}) {
                 </button>
               </div>
             </div>
+            {pathname==='/dashboard' &&
+            <>
+            <div ref={coverLetterRef} className='overflow-hidden  flex flex-col pt-24  '>
+              <FillData/>
+            </div>
+            <div ref={resumeRef} className='overflow-hidden  flex flex-col pt-24  '>
+              <ResumePage/>
+            </div>
+          </>
+}
       <div className='overflow-hidden  min-h-screen flex flex-col pt-24  '>
-     {children}
+        {children}
      </div>
     </div>
   );

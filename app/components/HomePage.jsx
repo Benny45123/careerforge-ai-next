@@ -30,7 +30,7 @@ export default function HomeDesign({children}) {
     const result=await handleLogout()
     if(result){
       setUser(null);
-      window.location.reload();
+      // window.location.reload();
     }
   }
   const scrollIntoSection=(elementRef)=>{
@@ -67,7 +67,7 @@ export default function HomeDesign({children}) {
         </div>
         {/* <div className="absolute    right-2   cursor-pointer" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}> */}
           {/* <Image src='/user.png' className="rounded-full  h-12 w-12" width='100' height='100' /> */}
-          <div  className="fixed w-11 h-11 rounded-full -translate-y-4 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold right-3 cursor-pointer" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+          <div  className="fixed w-11 h-11 rounded-full -translate-y-4 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold right-3 cursor-pointer" onClick={()=>setHovered(!hovered)}>
                 {user.name.charAt(0).toUpperCase()}
               </div>
           {/* <div className='flex flex-col text-left'>
@@ -95,7 +95,7 @@ export default function HomeDesign({children}) {
               className={`z-10 absolute right-2 mt-25 w-64 rounded-2xl bg-slate-900/95 backdrop-blur-xl border border-white/5 shadow-2xl transition-all duration-500 ${
                 hovered ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-3 pointer-events-none'
               }`}
-              onMouseEnter={() => setHovered(true)}
+              // onMouseEnter={() => setHovered(true)}
               onMouseLeave={() => setHovered(false)}
             >
               <div className="p-6 flex flex-col items-center border-b border-white/10">

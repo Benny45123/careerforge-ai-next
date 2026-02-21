@@ -32,12 +32,7 @@ const Register=async ({name,email,password}) =>{
             },
         })
         const result = await response.json();
-        if(response.ok){
-          // console.log("Register result: ",result);
-          // return true;
-          return result;
-        }
-        return false;
+        return {result,response};
     }
     catch (error) {
         console.error('Error:', error);
@@ -55,17 +50,11 @@ const Login =async ({email,password})=>{
             },
         })
         const result =await response.json();
-        if(response.ok){
-            // console.log('Success:', result.message);
-            return true;
-        }
-        else{
-          // console.log(result);
-            throw new Error(result.message);
-        }
+        return {result,response};
     }
     catch(error){
         console.error('Error:',error);
+        return false;
     }
 }
 const checkLogin=async()=>{

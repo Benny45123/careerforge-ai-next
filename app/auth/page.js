@@ -19,6 +19,8 @@ const Auth=({}) =>{
     const [userId,setUserId]=useState(null)
     const [email1,setEmail1]=useState(null);
     const [otpMessage,setOtpMessage]=useState(null);
+    const [errorMessage,setErrorMessage]=useState(null);
+    const [registerErrorMessage,setRegisterErrorMessage]=useState(null);
     const otpval=useRef(null)
     const ChangeClasses = ` p-8 rounded-xl shadow-md  w-full bg-auto bg-gradient-to-r from-violet-600 to-purple-800 flex  justify-center flex-col ${
         isSignUpMode ? "transition-transform duration-800 ease-in-out -translate-x-full opacity-100" : "transition-transform duration-800 ease-in-out  opacity-100"
@@ -31,30 +33,30 @@ const Auth=({}) =>{
         const user = name.current.value;
         const emailVal = email.current.value;
         const passwordVal = password.current.value;
-        const result=await Register({name:user,email:emailVal,password:passwordVal});
-        if(result){
+        const {result,response}=await Register({name:user,email:emailVal,password:passwordVal});
+        if(response.ok){
         // setIsSignUpMode(true);
             setOtp(true);
             setUserId(result.data.userId);
             setEmail1(result.data.email);
         }
         else{
-            alert('username or email aldready exist')
+            setRegisterErrorMessage(result.message || 'Registration failed');
         }
     } 
     const handleLoginSubmit =async (e) => {
         e.preventDefault();
         const emailVal = email.current.value;
         const passwordVal = password.current.value;
-        const result=await Login({email:emailVal,password:passwordVal});
-        if(result){
-            // console.log(result);
+        const {result,response}=await Login({email:emailVal,password:passwordVal});
+        if(response.ok){
+            console.log(result);
             const user=await checkLogin();
             setUser(user);
             router.replace("/dashboard")
         } 
         else{
-            alert("Invalid Credentials");
+            setErrorMessage(result.message || 'Login failed');
         } 
     }
     const handleOTPSubmit=async (e)=>{
@@ -107,17 +109,33 @@ const Auth=({}) =>{
             <input className='focus:outline-0 w-full ' placeholder="Email" type="email" name="email" ref={email} required/></div><br/><br/>
             <div className="border  border-gray-300 rounded px-2 py-1 flex items-center gap-2 m-2 has-focus-visible:shadow-md shadow-violet-400">
             <input className="focus:outline-none w-full " placeholder="Password" type="password" name="password" ref={password} required/></div><br/>
+            <div className="flex justify-center max-w-70 mx-auto">
+            {registerErrorMessage && (
+  <div className="flex items-start gap-2 mx-2 mb-3 px-3 py-2 bg-red-50 border-l-4 border-red-500 rounded-r-lg text-red-600 text-sm">
+    <span className="mt-0.5">⚠️</span>
+    <span className="font-mono leading-relaxed">{registerErrorMessage}</span>
+  </div>
+)}
+            </div>
             <div className="flex justify-center">
             <button className='rounded-2xl  bg-gradient-to-r from-violet-600 to-purple-800 text-white p-3 pl-7 pr-7 font-medium hover:bg-bright-color hover:shadow-md shadow-violet-400 focus:ring-primary-300 cursor-pointer' type="submit">Sign Up</button></div>
         </form>)}
         </> : <>
         <h1 className="text-3xl text-center mb-10 font-extrabold bg-gradient-to-r from-violet-600 to-purple-800  text-transparent bg-clip-text ">Sign In</h1><br/>
-        <form onSubmit={(e) => {handleLoginSubmit(e)}}>
+        <form  onSubmit={(e) => {handleLoginSubmit(e)}}>
             <div className="border border-gray-300 rounded px-2 py-1 flex items-center gap-2 m-2 has-focus-visible:shadow-md shadow-violet-400">
             <input className='focus:outline-0 w-full ' placeholder="Email" type="email" name="email" ref={email} required/></div><br/><br/>
             <div className="border  border-gray-300 rounded px-2 py-1 flex items-center gap-2 m-2 has-focus-visible:shadow-md shadow-violet-400">
             <input className="focus:outline-none w-full " placeholder="Password" type="password" name="password" ref={password} required/></div><br/><br/>
             <label className="flex items-center gap-2 m-2 font-mono text-sm"><input type="checkbox" className="h-4 w-4"/>Remember Me</label><br/>
+            <div className="flex justify-center max-w-70 mx-auto">
+            {errorMessage && (
+  <div className="flex items-start gap-2 mx-2 mb-3 px-3 py-2 bg-red-50 border-l-4 border-red-500 rounded-r-lg text-red-600 text-sm">
+    <span className="mt-0.5">⚠️</span>
+    <span className="font-mono leading-relaxed">{errorMessage}</span>
+  </div>
+)}
+            </div>
             <div className="flex justify-center">
             <button className='rounded-2xl  bg-gradient-to-r from-violet-600 to-purple-800 text-white p-3 pl-7 pr-7 font-medium hover:bg-bright-color hover:shadow-md shadow-violet-400 focus:ring-primary-300 cursor-pointer' type="submit" >Sign In</button></div>
         </form>

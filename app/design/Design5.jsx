@@ -37,8 +37,11 @@ const Design5 =({data,designRef})=>{
 
       <div className="p-12 pt-10 text-gray-800">
         
-        <p className="whitespace-pre-line text-sm leading-relaxed">{data.generatedLetter}</p>
-
+      <div className="pl-6 text-gray-700 flex flex-col justify-start">
+  <p className="whitespace-pre-line text-sm leading-6 text-justify text-justify-inter-word">
+    {data.generatedLetter?.trim()} <br/>{data.name}
+  </p>
+</div>
       </div>
     </div>
         </>

@@ -21,7 +21,11 @@ const Design2 = ({data,designRef}) => {
   
         <div className="mt-12">
           
-          <div className="whitespace-pre-line text-sm leading-relaxed">{data.generatedLetter}</div>
+        <div className="pl-6 text-gray-700 flex flex-col justify-start">
+  <p className="whitespace-pre-line text-sm leading-6 text-justify text-justify-inter-word">
+    {data.generatedLetter?.trim()} <br/>{data.name}
+  </p>
+</div>
           </div>
   
         </div>

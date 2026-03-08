@@ -51,7 +51,11 @@ const Design6 =({data,designRef})=>{
           <p className="text-sm">Sincerely,</p>
           <p className="text-lg font-bold uppercase mt-1">ANTHONY SANTORO</p>
         </div> */}
-        <p className="whitespace-pre-line text-sm leading-relaxed">{data.generatedLetter}</p>
+<div className="pl-6 text-gray-700 flex flex-col justify-start">
+  <p className="whitespace-pre-line text-sm leading-6 text-justify text-justify-inter-word">
+    {data.generatedLetter?.trim()} <br/>{data.name}
+  </p>
+</div>
       </div>
     </div>
         </>

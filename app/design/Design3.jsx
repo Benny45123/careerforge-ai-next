@@ -44,11 +44,16 @@ const Design3=({data,designRef})=>{
                 <p>Company Address</p>
             </div> */}
 
-            <p className="whitespace-pre-line text-sm leading-relaxed">{data.generatedLetter}</p>
+<div className="pl-6 text-gray-700 flex flex-col justify-start">
+  <p className="whitespace-pre-line text-sm leading-6 text-justify text-justify-inter-word">
+    {data.generatedLetter?.trim()} <br/>{data.name}
+  </p>
+</div>
+
 {/* 
             <div className="text-right text-sm mt-12">
                 <p>Sincerely,</p>
-                <p className="mt-2 font-semibold">Sophia Rodriguez</p>
+                <p className="mt-2 font-semibold">{data.name}</p>
             </div> */}
         </div>
         

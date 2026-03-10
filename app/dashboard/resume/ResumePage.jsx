@@ -140,22 +140,152 @@ const ResumePage=()=>{
                     </div>
                             
                 </div>
-                {!responseData ? <div className="flex items-center justify-center"><button type="submit" className="bg-gradient-to-r from-green-600 to-teal-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-green-700 hover:to-teal-700  transition-colors mt-5 cursor-pointer">Get Resume Score</button></div> : 
-                    <div className={`mt-10 p-6 border  rounded-lg w-full ${responseData.overallScore >= 80 ? 'border-green-600' : responseData.overallScore >= 60 ? 'border-yellow-600' : 'border-red-600'} ${responseData.overallScore >= 80 ? 'bg-green-100' : responseData.overallScore >= 60 ? 'bg-yellow-100' : 'bg-red-100'}`}>
-                        <h2 className="text-2xl font-semibold mb-4">Resume Analysis Result</h2>
-                        <p className="text-lg"><strong>ATS Score : </strong> {responseData.overallScore}</p>
-                        <p className="text-lg"><strong>Missing Keywords:</strong> {responseData.missing_keywords.join(', ')}</p>
-                        <p className="text-lg"><strong>Response Confidence:</strong> {responseData.responseConfidence}</p>
-                        <p className="text-sm text-gray-600 mt-2">* Note: A "low" confidence indicates that the job description provided was brief, which may affect the accuracy of keyword matching.</p>
-                        <p className="text-sm text-gray-600 mt-2">**Score :<br/>0-59 Change resume immediately "Needs more key skills" <br/>60-80 Need some Modifications "Some skills need improvement”<br/> 80-100 proceed with the resume for given jd “Strong, ATS-friendly resume” </p>
-                        <button 
-                                            onClick={() => setResponseData(null)}
-                                            className="mt-6 w-full px-6 py-3 rounded-xl  border cursor-pointer   transition-all hover:shadow-md"
-                                        >
-                                            Analyze Another Resume
-                                        </button>
-                        </div>
-                    }
+                {!responseData ? (
+  <div className="flex items-center justify-center">
+    <button
+      type="submit"
+      className="bg-gradient-to-r from-green-600 to-teal-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-green-700 hover:to-teal-700 transition-colors mt-5 cursor-pointer"
+    >
+      Get Resume Score
+    </button>
+  </div>
+) : (
+  <div className="mt-10 w-full">
+    {/* Score Header Card */}
+    <div className={`relative overflow-hidden rounded-2xl p-6 mb-4 text-white
+      ${responseData.atsScore >= 80 ? 'bg-gradient-to-br from-emerald-600 to-teal-700' :
+        responseData.atsScore >= 60 ? 'bg-gradient-to-br from-amber-500 to-orange-600' :
+        'bg-gradient-to-br from-red-500 to-rose-700'}`}>
+      
+      {/* Background decoration */}
+      <div className="absolute top-0 right-0 w-40 h-40 rounded-full opacity-10 bg-white -translate-y-10 translate-x-10" />
+      <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full opacity-10 bg-white translate-y-8 -translate-x-8" />
+
+      <div className="relative flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <p className="text-sm font-medium opacity-80 uppercase tracking-widest mb-1">ATS Analysis</p>
+          <h2 className="text-2xl font-bold">Resume Score</h2>
+          <p className="text-sm mt-1 opacity-75">
+            {responseData.atsScore >= 80 ? '🎉 Strong resume — ready to apply!' :
+             responseData.atsScore >= 60 ? '⚠️ Almost there — a few tweaks needed' :
+             '🚨 Needs significant improvement'}
+          </p>
+        </div>
+
+        {/* Big Score Circle */}
+        <div className={`flex items-center justify-center w-24 h-24 rounded-full bg-white/20 border-4 border-white/40 shadow-lg`}>
+          <div className="text-center">
+            <span className="text-3xl font-extrabold leading-none">{responseData.atsScore}</span>
+            <span className="block text-xs opacity-75">/100</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Keywords Grid */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+      {/* Matched Keywords */}
+      {responseData.matched_keywords?.length > 0 && (
+        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-emerald-600 text-lg">✅</span>
+            <h3 className="font-semibold text-emerald-800 text-sm uppercase tracking-wide">Matched Keywords</h3>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {responseData.matched_keywords.map((kw, i) => (
+              <span key={i} className="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs font-medium rounded-full border border-emerald-300">
+                {kw}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Missing Keywords */}
+      {responseData.missing_keywords?.length > 0 && (
+        <div className="bg-red-50 border border-red-200 rounded-2xl p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-red-500 text-lg">❌</span>
+            <h3 className="font-semibold text-red-800 text-sm uppercase tracking-wide">Missing Keywords</h3>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {responseData.missing_keywords.map((kw, i) => (
+              <span key={i} className="px-2 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-full border border-red-300">
+                {kw}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+
+    {/* Resume Sections + Confidence Row */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+      {/* Resume Sections */}
+      {responseData.resume_sections?.length > 0 && (
+        <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-blue-500 text-lg">📄</span>
+            <h3 className="font-semibold text-blue-800 text-sm uppercase tracking-wide">Detected Sections</h3>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {responseData.resume_sections.map((sec, i) => (
+              <span key={i} className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full border border-blue-300">
+                {sec}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Confidence */}
+      <div className="bg-purple-50 border border-purple-200 rounded-2xl p-4">
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-purple-500 text-lg">🎯</span>
+          <h3 className="font-semibold text-purple-800 text-sm uppercase tracking-wide">Response Confidence</h3>
+        </div>
+        <span className={`inline-block px-3 py-1 rounded-full text-sm font-bold capitalize border
+          ${responseData.responseConfidence === 'high' ? 'bg-emerald-100 text-emerald-700 border-emerald-300' :
+            responseData.responseConfidence === 'medium' ? 'bg-amber-100 text-amber-700 border-amber-300' :
+            'bg-red-100 text-red-700 border-red-300'}`}>
+          {responseData.responseConfidence}
+        </span>
+        {responseData.responseConfidence === 'low' && (
+          <p className="text-xs text-purple-600 mt-2 leading-relaxed">
+            ⚠️ Brief job description detected — keyword matching may be less accurate.
+          </p>
+        )}
+      </div>
+    </div>
+
+    {/* Score Legend */}
+    <div className="bg-gray-50 border border-gray-200 rounded-2xl p-4 mb-4">
+      <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">Score Guide</h3>
+      <div className="grid grid-cols-3 gap-2 text-center text-xs">
+        <div className="bg-red-100 border border-red-200 rounded-xl p-2">
+          <div className="font-bold text-red-600">0 – 59</div>
+          <div className="text-red-500 mt-0.5">Needs Overhaul</div>
+        </div>
+        <div className="bg-amber-100 border border-amber-200 rounded-xl p-2">
+          <div className="font-bold text-amber-600">60 – 79</div>
+          <div className="text-amber-500 mt-0.5">Needs Tweaks</div>
+        </div>
+        <div className="bg-emerald-100 border border-emerald-200 rounded-xl p-2">
+          <div className="font-bold text-emerald-600">80 – 100</div>
+          <div className="text-emerald-500 mt-0.5">ATS-Ready ✓</div>
+        </div>
+      </div>
+    </div>
+
+    {/* Analyze Another Button */}
+    <button
+      onClick={() => setResponseData(null)}
+      className="w-full px-6 py-3 rounded-2xl border-2 border-gray-300 text-gray-600 font-semibold text-sm hover:border-gray-400 hover:bg-gray-50 cursor-pointer transition-all hover:shadow-md"
+    >
+      ↩ Analyze Another Resume
+    </button>
+  </div>
+)}
                 </div>
                 </form>
 

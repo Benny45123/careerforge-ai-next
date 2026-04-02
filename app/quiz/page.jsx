@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+"use client";
 import { generateQuiz } from "@/app/services/BackendHandler";
-
+import { useState, useRef } from "react";
 // ─── Fonts (using next/font pattern) ───────────────────────────────────────
 // Replace with your actual font imports from next/font/google
 // import { Syne } from "next/font/google";

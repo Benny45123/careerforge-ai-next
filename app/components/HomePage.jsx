@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { handleLogout } from '@/app/services/BackendHandler';
 import { usePathname } from 'next/navigation';
 import ResumePage from '../dashboard/resume/ResumePage';
+import QuizPage from '@/app/quiz/page';
 import {Montserrat,M_PLUS_Rounded_1c,Outfit} from 'next/font/google'
 const montserrat=Montserrat({subsets:['latin'],weight:['400','700']});
 const mplus=M_PLUS_Rounded_1c({subsets:['latin'],weight:['400','700']});
@@ -17,6 +18,7 @@ export default function HomeDesign({children}) {
   const pathname=usePathname();
   const resumeRef=useRef(null);
   const coverLetterRef=useRef(null);
+  const quizRef=useRef(null);
   const {user,setUser}=useContext(AppContext);
   const [hovered,setHovered]=useState(false);
   const router=useRouter();
@@ -60,9 +62,10 @@ export default function HomeDesign({children}) {
           <input type="text" placeholder='Search..' className='focus:outline-none w-full'/>
         </div> */}
         <div className=' flex flex-row items-center space-x-20'>
-          <button onClick={()=>{scrollIntoSection(coverLetterRef)}}  className={`  ${pathname=='/dashboard' ? 'text-white':'text-transparent'} opacity-60 hover:opacity-100`}>Cover letter</button>
-          <button onClick={()=>{scrollIntoSection(resumeRef)}}  className={`${pathname=='/dashboard' ? 'text-white':'text-transparent'} opacity-60 hover:opacity-100`}>Resume</button>
-          <button  className={`${pathname=='/dashboard' ? 'text-white':'text-transparent'} opacity-60 hover:opacity-100`}>Jobs</button>
+          <button onClick={()=>{scrollIntoSection(coverLetterRef)}}  className={`  ${pathname=='/dashboard' ? 'text-white':'text-transparent'} opacity-60 hover:opacity-100 cursor-pointer`}>Cover letter</button>
+          <button onClick={()=>{scrollIntoSection(resumeRef)}}  className={`${pathname=='/dashboard' ? 'text-white':'text-transparent'} opacity-60 hover:opacity-100 cursor-pointer`}>Resume</button>
+          <button onClick={()=>{scrollIntoSection(quizRef)}}  className={`  ${pathname=='/dashboard' ? 'text-white':'text-transparent'} opacity-60 hover:opacity-100 cursor-pointer`}>Quiz</button>
+          <button  className={`${pathname=='/dashboard' ? 'text-white':'text-transparent'} opacity-60 hover:opacity-100 cursor-pointer`}>Jobs</button>
 
         </div>
         {/* <div className="absolute    right-2   cursor-pointer" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}> */}
@@ -131,6 +134,9 @@ export default function HomeDesign({children}) {
             </div>
             <div ref={resumeRef} className='overflow-hidden  flex flex-col pt-24  '>
               <ResumePage/>
+            </div>
+            <div ref={quizRef} className='overflow-hidden  flex flex-col pt-24  '>
+              <QuizPage/>
             </div>
           </>
 }

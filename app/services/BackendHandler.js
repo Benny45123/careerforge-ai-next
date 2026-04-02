@@ -212,5 +212,19 @@ const checkLogin=async()=>{
   }
 
   }
+  const generateQuiz = async (file,jobDescription) => {
+    const formData = new FormData();
+    formData.append("document", file);
+    formData.append("jobDescription", jobDescription);
+  
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/quiz/generate-quiz`, {
+      method: "POST",
+      body: formData,
+      credentials: "include",
+    });
+  
+    return await res.json();
+  };
 
-export {postData,Register,Login,checkLogin,handleLogout,getCoverLetters,getAllCoverLetters,postResumeData,getAllResumes,verifyOtp,resendOtp};  
+
+export {postData,Register,Login,checkLogin,handleLogout,getCoverLetters,getAllCoverLetters,postResumeData,getAllResumes,verifyOtp,resendOtp,generateQuiz};  
